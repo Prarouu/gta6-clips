@@ -1,0 +1,4 @@
+{
+  "_help": "Record rights you have VERIFIED. status is one of ORIGINAL, LICENSED, CREATOR_PERMISSION, PUBLIC_DOMAIN, CREATIVE_COMMONS, PERMISSION_REQUIRED, UNKNOWN, RESTRICTED. Match by creator name (case-insensitive). Leave empty until you actually have permission.",
+  "creators": []
+}

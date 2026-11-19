@@ -1,0 +1,46 @@
+{
+  "timezone": "Asia/Kolkata",
+  "window_hours": 72,
+  "daily_target_min": 10,
+  "daily_target_max": 15,
+  "min_score": 30,
+  "min_relevance": 50,
+  "typical_view_fraction": 0.05,
+  "upload_mode": "MANUAL_APPROVAL",
+  "auto_publish_rights": ["ORIGINAL", "LICENSED", "CREATOR_PERMISSION", "PUBLIC_DOMAIN"],
+  "enabled_sources": {
+    "youtube_api": true,
+    "youtube_search": true,
+    "youtube_channels": true,
+    "reddit": true,
+    "news_rss": true
+  },
+  "youtube": {
+    "ytdlp_results_per_keyword": 8,
+    "ytdlp_keywords_per_run": 12,
+    "ytdlp_enrich_limit": 60,
+    "api_keywords_per_run": 8,
+    "api_results_per_keyword": 25,
+    "api_daily_budget_units": 3000
+  },
+  "reddit": {
+    "subreddits": ["GTA6", "GrandTheftAutoVI", "GTAVI"],
+    "search_keywords_per_run": 4
+  },
+  "news_feeds": [
+    {"name": "IGN", "url": "https://feeds.ign.com/ign/all"},
+    {"name": "GameSpot", "url": "https://www.gamespot.com/feeds/news/"},
+    {"name": "PC Gamer", "url": "https://www.pcgamer.com/rss/"},
+    {"name": "Eurogamer", "url": "https://www.eurogamer.net/feed"}
+  ],
+  "score_weights": {
+    "engagement": 25,
+    "freshness": 20,
+    "relative_performance": 15,
+    "relevance": 20,
+    "shorts_suitability": 10,
+    "trending": 5,
+    "quality": 5
+  },
+  "retry": {"attempts": 3, "base_delay_seconds": 2}
+}

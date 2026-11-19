@@ -1,0 +1,6 @@
+{
+  "_help": "Add channels to monitor via their free RSS feed. Use 'handle' (e.g. @RockstarGames) or 'channel_id' (starts with UC). Set official true only for Rockstar's own channels.",
+  "channels": [
+    {"name": "Rockstar Games", "handle": "@RockstarGames", "official": true}
+  ]
+}

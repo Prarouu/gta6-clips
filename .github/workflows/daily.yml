@@ -1,0 +1,60 @@
+name: Daily GTA 6 scan
+
+on:
+  schedule:
+    - cron: "0 3 * * *"        # 03:00 UTC = 08:30 AM India time. Edit to change the time.
+  workflow_dispatch:            # lets you press "Run workflow" manually
+    inputs:
+      window_hours:
+        description: "Time window in hours (24, 72, 168 or custom). Blank = settings.json value"
+        required: false
+
+permissions:
+  contents: write               # needed so the run can save the database + reports back to the repo
+
+concurrency:
+  group: daily-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scan
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}   # optional; leave the secret unset to skip
+        run: python run.py scan ${{ github.event.inputs.window_hours && format('--window-hours {0}', github.event.inputs.window_hours) || '' }}
+
+      - name: Show report in run summary
+        if: always()
+        run: |
+          if [ -f data/reports/latest.md ]; then cat data/reports/latest.md >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Upload reports and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-and-logs
+          path: |
+            data/reports/
+            data/logs/
+          retention-days: 14
+
+      - name: Save database and reports to the repo
+        if: always()
+        run: |
+          git config user.name "gta6-bot"
+          git config user.email "gta6-bot@users.noreply.github.com"
+          git add data/gta6.db data/reports
+          git diff --cached --quiet || (git commit -m "Daily scan $(date -u +%F)" && git pull --rebase && git push)
